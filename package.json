@@ -19,9 +19,14 @@
     "async": "~1.4.0",
     "express": "~4.13.1",
     "json-schema-generator": "bobby-brennan/json-schema-generator#patch-1",
+    "json-yaml": "^0.1.0",
+    "json2yaml": "^1.1.0",
     "jsonix": "~2.3.0",
     "request": "^2.69.0",
+    "swagger2openapi": "^5.3.1",
     "xsd2json": "~1.4.3",
+    "yaml": "^1.6.0",
+    "yamljs": "^0.3.0",
     "yargs": "^3.32.0"
   },
   "bin": {

@@ -1,13 +1,32 @@
 #!/usr/bin/env node
+const FS = require("fs");
+const converter = require("swagger2openapi");
+const options = require("../options.js");
+const YAML = require("yaml");
 
-var FS = require('fs');
-var options = require('../options.js');
-
-require('../index.js')(options, function(err, swagger) {
+/**
+ * Method to run the Index file
+ */
+require("../index.js")(options, function(err, swagger) {
+  // Catch any errors
   if (err) throw err;
-  if (options.output === "-")
-  	console.log(JSON.stringify(swagger, null, 2))
-  else
-  	FS.writeFileSync(options.output, JSON.stringify(swagger, null, 2))
-});
+  // Generate a YAML file along with JSON
+  const swaggerYaml = YAML.stringify(swagger, 8, 2);
 
+  // Write the Swagger Files
+  FS.writeFileSync("docs/swagger2.json", JSON.stringify(swagger, null, 2));
+  FS.writeFileSync("docs/swagger2.yaml", swaggerYaml);
+
+  // Convert the Swagger Docs to OpenAPI 3.0
+  converter.convertFile("docs/swagger2.json", options, (err, opts) => {
+    // Convert the JSON to YAML
+    const openapiYaml = YAML.stringify(opts.openapi, 8, 2);
+
+    // Write the OpenAPI files
+    FS.writeFileSync(
+      "docs/openapi3.json",
+      JSON.stringify(opts.openapi, null, 2)
+    );
+    FS.writeFileSync("docs/openapi3.yaml", openapiYaml);
+  });
+});
