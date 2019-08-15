@@ -1,0 +1,2 @@
+./bin/fhir-swagger \
+--fhir_url "https://cdxvadevfhir.azurewebsites.us" 
